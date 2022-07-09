@@ -57,14 +57,25 @@ class MyHomePage extends StatelessWidget {
                             EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: const Color.fromARGB(255, 115, 156, 190),
+                                color: const Color.fromARGB(255, 243, 108, 59),
                                 width: 2)),
-                        child: Text(tx.amount.toString(),
+                        child: Text("LE ${tx.amount.toString()}",
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 243, 108, 59))),
                       ),
                       Column(
-                        children: [Text(tx.title), Text(tx.date.toString())],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(tx.title,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(
+                            tx.date.toString(),
+                            style: const TextStyle(color: Colors.grey),
+                          )
+                        ],
                       )
                     ],
                   ),
