@@ -10,41 +10,45 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transactions.map((tx) {
-        return Card(
-          child: Row(
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(10),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: const Color.fromARGB(255, 243, 108, 59),
-                        width: 2)),
-                child: Text("LE ${tx.amount.toString()}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 243, 108, 59))),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(tx.title,
+    return Container(
+      height: 300,
+      child: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return Card(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 243, 108, 59),
+                          width: 2)),
+                  child: Text("LE ${transactions[index].amount.toString()}",
                       style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold)),
-                  Text(
-                    DateFormat.yMMMd().format(tx.date),
-                    style: const TextStyle(color: Colors.grey),
-                  )
-                ],
-              )
-            ],
-          ),
-        );
-      }).toList(),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 243, 108, 59))),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(transactions[index].title,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text(
+                      DateFormat.yMMMd().format(transactions[index].date),
+                      style: const TextStyle(color: Colors.grey),
+                    )
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+        itemCount: transactions.length,
+      ),
     );
   }
 }
