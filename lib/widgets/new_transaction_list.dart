@@ -1,11 +1,10 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
 class NewTransactionList extends StatelessWidget {
+  final Function addtransation;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
-
+  NewTransactionList(this.addtransation);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,7 +31,8 @@ class NewTransactionList extends StatelessWidget {
                 // ignore: deprecated_member_use
                 FlatButton(
                   onPressed: () {
-                    print(titleController.text);
+                    addtransation(titleController.text,
+                        double.parse(amountController.text));
                   },
                   textColor: Color.fromARGB(255, 243, 108, 59),
                   child: Text('Add Transaction'),
