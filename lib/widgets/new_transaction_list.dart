@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 
-class NewTransactionList extends StatelessWidget {
+class NewTransactionList extends StatefulWidget {
   final Function addtransation;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
 
   NewTransactionList(this.addtransation);
+
+  @override
+  State<NewTransactionList> createState() => _NewTransactionListState();
+}
+
+class _NewTransactionListState extends State<NewTransactionList> {
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   void SubmitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) return;
-    addtransation(titleController.text, double.parse(amountController.text));
+    widget.addtransation(
+        titleController.text, double.parse(amountController.text));
+    Navigator.of(context).pop();
   }
 
   @override
@@ -37,7 +45,7 @@ class NewTransactionList extends StatelessWidget {
                 // ignore: deprecated_member_use
                 FlatButton(
                   onPressed: SubmitData,
-                  textColor: Color.fromARGB(255, 243, 108, 59),
+                  textColor: Theme.of(context).primaryColor,
                   child: Text('Add Transaction'),
                 )
               ])),

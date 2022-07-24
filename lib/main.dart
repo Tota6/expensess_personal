@@ -10,7 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Personal Expenses ',
+      theme: ThemeData(
+        primaryColor: Colors.deepOrange,
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: Colors.yellow),
+      ),
       home: MyHomePage(),
     );
   }
@@ -79,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Container(
                 child: Card(
-                  color: const Color.fromARGB(255, 235, 216, 159),
+                  color: Theme.of(context).primaryColor,
                   elevation: 5,
                   child: Container(
                       width: double.infinity, child: const Text("chart")),
