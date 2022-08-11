@@ -1,7 +1,8 @@
-import 'package:expensses_planner/widgets/new_transaction_list.dart';
+import './widgets/new_transaction_list.dart';
 import 'package:flutter/material.dart';
 import './widgets/transaction_list.dart';
 import 'models/transactions.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,19 +29,39 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transactions> _userTransaction = [
-    Transactions(
-      id: "t1",
-      title: "new shoes",
-      amount: 225,
-      date: DateTime.now(),
-    ),
-    Transactions(
-      id: "t2",
-      title: "new nail polish",
-      amount: 16.99,
-      date: DateTime.now(),
-    ),
+    // Transactions(
+    //   id: "t1",
+    //   title: "new shoes",
+    //   amount: 225,
+    //   date: DateTime.now(),
+    // ),
+    // Transactions(
+    //   id: "t2",
+    //   title: "new nail polish",
+    //   amount: 16.99,
+    //   date: DateTime.now(),
+    // ),
   ];
+
+  // List<Transactions> get _recentTransactions {
+  //   return _userTransaction.where((tx) {
+  //     return tx.date.isAfter(
+  //       DateTime.now().subtract(
+  //         Duration(days: 7),
+  //       ),
+  //     );
+  //   }).toList();
+  // }
+
+  List<Transactions> get _recentTransactions {
+    return _userTransaction.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addNewTransaction(String newTitle, double newAmount) {
     final nTransaction = Transactions(
@@ -82,14 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                child: Card(
-                  color: Theme.of(context).primaryColor,
-                  elevation: 5,
-                  child: Container(
-                      width: double.infinity, child: const Text("chart")),
-                ),
-              ),
+              Chart(_recentTransactions),
               TransactionList(_userTransaction)
             ]),
       ),
