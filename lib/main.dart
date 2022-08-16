@@ -13,9 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses ',
       theme: ThemeData(
-        primaryColor: Colors.deepOrange,
-        colorScheme:
-            ColorScheme.fromSwatch().copyWith(secondary: Colors.yellow),
+        primarySwatch: Colors.pink,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Colors.pink, secondary: Color.fromARGB(255, 109, 41, 64)),
+        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.pink),
       ),
       home: MyHomePage(),
     );
@@ -96,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add_circle),
             onPressed: () => _startAddTransaction(context),
           ),
         ],
@@ -113,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _startAddTransaction(context),
-        child: const Icon(Icons.add_circle),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -33,7 +33,7 @@ class _NewTransactionListState extends State<NewTransactionList> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 TextField(
-                  decoration: InputDecoration(labelText: "Tiltle"),
+                  decoration: InputDecoration(labelText: "Title"),
                   controller: titleController,
                 ),
                 TextField(
