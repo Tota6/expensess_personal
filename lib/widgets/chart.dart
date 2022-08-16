@@ -43,9 +43,12 @@ class Chart extends StatelessWidget {
     // print(groupedTransactionValues);
     return Card(
       elevation: 6,
-      child: Padding(
-        padding: EdgeInsets.all(20),
+      // child: Padding(
+      margin: EdgeInsets.all(20),
+      child: Container(
+        padding: EdgeInsets.all(10),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionValues.map((data) {
             return Flexible(
               fit: FlexFit.tight,
@@ -58,6 +61,7 @@ class Chart extends StatelessWidget {
             );
           }).toList(),
         ),
+        // ),
       ),
     );
   }

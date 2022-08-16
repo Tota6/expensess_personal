@@ -91,21 +91,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Expention personal"),
+        title: const Text(
+          'Personal Expenses',
+        ),
         actions: <Widget>[
           IconButton(
-              onPressed: () => _startAddTransaction(context),
-              icon: const Icon(Icons.add))
+            icon: const Icon(Icons.add),
+            onPressed: () => _startAddTransaction(context),
+          ),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Chart(_recentTransactions),
-              TransactionList(_userTransaction)
-            ]),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Chart(_recentTransactions),
+            TransactionList(_userTransaction),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
