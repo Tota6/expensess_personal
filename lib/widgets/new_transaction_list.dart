@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class NewTransactionList extends StatefulWidget {
@@ -42,11 +44,41 @@ class _NewTransactionListState extends State<NewTransactionList> {
                   keyboardType: TextInputType.number,
                   onSubmitted: (_) => SubmitData,
                 ),
+                Container(
+                  height: 90,
+                  child: Row(
+                    children: <Widget>[
+                      Text('No Date Choose'),
+                      TextButton(
+                        onPressed: () => {},
+                        child: const Text(
+                          "Choose Date",
+                          style: TextStyle(fontWeight: FontWeight.w800),
+                        ),
+                        style: TextButton.styleFrom(
+                          primary: Theme.of(context).primaryColor,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 // ignore: deprecated_member_use
-                FlatButton(
+                ElevatedButton(
                   onPressed: SubmitData,
-                  textColor: Theme.of(context).primaryColor,
-                  child: Text('Add Transaction'),
+                  // textColor: Theme.of(context).primaryColor,
+                  style: TextButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      textStyle: TextStyle(
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme!
+                              .secondary)),
+                  child: Text('Add Transaction',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme
+                              ?.primary)),
                 )
               ])),
     );

@@ -13,10 +13,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses ',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.orange,
         colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.pink, secondary: Color.fromARGB(255, 109, 41, 64)),
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.pink),
+            primary: Color.fromARGB(255, 206, 128, 3),
+            secondary: Color.fromARGB(255, 151, 115, 6)),
+        textTheme: Theme.of(context)
+            .textTheme
+            .apply(bodyColor: Color.fromARGB(255, 62, 41, 7)),
+        buttonTheme: ButtonThemeData(
+            // textTheme: ButtonTextTheme.primary,
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: Colors.white,
+                secondary: Color.fromARGB(255, 151, 115, 6))),
       ),
       home: MyHomePage(),
     );
@@ -58,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return _userTransaction.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
-          Duration(days: 7),
+          const Duration(days: 7),
         ),
       );
     }).toList();

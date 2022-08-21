@@ -45,6 +45,8 @@ class TransactionList extends StatelessWidget {
                         child: FittedBox(
                             child: Text(
                           '\$${transactions[index].amount.toStringAsFixed(2)}',
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 73, 56, 5)),
                           // style: Theme.of(context).textTheme.titleSmall,
                         )),
                       ),
