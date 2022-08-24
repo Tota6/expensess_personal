@@ -1,6 +1,5 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransactionList extends StatefulWidget {
   final Function addtransation;
@@ -12,17 +11,44 @@ class NewTransactionList extends StatefulWidget {
 }
 
 class _NewTransactionListState extends State<NewTransactionList> {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime _selectedDate = DateTime.parse('0000-00-00');
 
-  void SubmitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.parse(amountController.text);
+  void _submitData() {
+    if (_amountController.text.isEmpty) {
+      return;
+    }
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0) return;
+    if (enteredTitle.isEmpty ||
+        enteredAmount <= 0 ||
+        _selectedDate == DateTime.parse('0000-00-00')) {
+      return;
+    }
     widget.addtransation(
-        titleController.text, double.parse(amountController.text));
+      _titleController.text,
+      double.parse(_amountController.text),
+      _selectedDate,
+    );
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2022),
+            lastDate: DateTime.now())
+        .then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -36,35 +62,41 @@ class _NewTransactionListState extends State<NewTransactionList> {
               children: <Widget>[
                 TextField(
                   decoration: InputDecoration(labelText: "Title"),
-                  controller: titleController,
+                  controller: _titleController,
+                  onSubmitted: (_) => _submitData(),
                 ),
                 TextField(
                   decoration: InputDecoration(labelText: "Amount"),
-                  controller: amountController,
+                  controller: _amountController,
                   keyboardType: TextInputType.number,
-                  onSubmitted: (_) => SubmitData,
+                  onSubmitted: (_) => _submitData(),
                 ),
                 Container(
                   height: 90,
                   child: Row(
                     children: <Widget>[
-                      Text('No Date Choose'),
+                      Expanded(
+                        child: Text(_selectedDate ==
+                                DateTime.parse('0000-00-00')
+                            ? 'No Date Chooose!'
+                            : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                      ),
                       TextButton(
-                        onPressed: () => {},
+                        style: TextButton.styleFrom(
+                          primary: Theme.of(context).primaryColor,
+                        ),
                         child: const Text(
                           "Choose Date",
                           style: TextStyle(fontWeight: FontWeight.w800),
                         ),
-                        style: TextButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
-                        ),
+                        onPressed: () => _presentDatePicker(),
                       )
                     ],
                   ),
                 ),
                 // ignore: deprecated_member_use
                 ElevatedButton(
-                  onPressed: SubmitData,
+                  onPressed: _submitData,
                   // textColor: Theme.of(context).primaryColor,
                   style: TextButton.styleFrom(
                       primary: Theme.of(context).primaryColor,
