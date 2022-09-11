@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Personal Expenses ',
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -38,18 +39,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transactions> _userTransaction = [
-    // Transactions(
-    //   id: "t1",
-    //   title: "new shoes",
-    //   amount: 225,
-    //   date: DateTime.now(),
-    // ),
-    // Transactions(
-    //   id: "t2",
-    //   title: "new nail polish",
-    //   amount: 16.99,
-    //   date: DateTime.now(),
-    // ),
+    Transactions(
+      id: "t1",
+      title: "new shoes",
+      amount: 225,
+      date: DateTime.now(),
+    ),
+    Transactions(
+      id: "t2",
+      title: "new nail polish",
+      amount: 16.99,
+      date: DateTime.now(),
+    ),
   ];
 
   // List<Transactions> get _recentTransactions {
@@ -85,6 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   void _startAddTransaction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
@@ -105,10 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
           'Personal Expenses',
         ),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add_circle),
-            onPressed: () => _startAddTransaction(context),
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.add_circle),
+          //   onPressed: () => _startAddTransaction(context),
+          // ),
         ],
       ),
       body: SingleChildScrollView(
@@ -116,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_userTransaction),
+            TransactionList(_userTransaction, _deleteTransaction),
           ],
         ),
       ),
