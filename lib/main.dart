@@ -1,10 +1,20 @@
+import 'package:flutter/services.dart';
 import './widgets/new_transaction_list.dart';
 import 'package:flutter/material.dart';
 import './widgets/transaction_list.dart';
 import 'models/transactions.dart';
 import './widgets/chart.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ],
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -39,18 +49,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transactions> _userTransaction = [
-    Transactions(
-      id: "t1",
-      title: "new shoes",
-      amount: 225,
-      date: DateTime.now(),
-    ),
-    Transactions(
-      id: "t2",
-      title: "new nail polish",
-      amount: 16.99,
-      date: DateTime.now(),
-    ),
+    // Transactions(
+    //   id: "t1",
+    //   title: "new shoes",
+    //   amount: 225,
+    //   date: DateTime.now(),
+    // ),
+    // Transactions(
+    //   id: "t2",
+    //   title: "new nail polish",
+    //   amount: 16.99,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   // List<Transactions> get _recentTransactions {
@@ -106,24 +116,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Personal Expenses',
-        ),
-        actions: <Widget>[
-          // IconButton(
-          //   icon: const Icon(Icons.add_circle),
-          //   onPressed: () => _startAddTransaction(context),
-          // ),
-        ],
+    final appBar = AppBar(
+      title: const Text(
+        'Personal Expenses',
       ),
+      actions: <Widget>[
+        // IconButton(
+        //   icon: const Icon(Icons.add_circle),
+        //   onPressed: () => _startAddTransaction(context),
+        // ),
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransaction, _deleteTransaction),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.7,
+                child: TransactionList(_userTransaction, _deleteTransaction)),
           ],
         ),
       ),
