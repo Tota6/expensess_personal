@@ -45,7 +45,7 @@ class Chart extends StatelessWidget {
       elevation: 6,
       // child: Padding(
       margin: EdgeInsets.all(20),
-      child: Container(
+      child: Padding(
         padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
