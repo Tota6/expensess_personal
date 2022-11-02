@@ -6,13 +6,13 @@ import 'models/transactions.dart';
 import './widgets/chart.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.portraitUp,
-    ],
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.portraitDown,
+  //     DeviceOrientation.portraitUp,
+  //   ],
+  // );
   runApp(MyApp());
 }
 
@@ -73,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
   //   }).toList();
   // }
 
+  bool _showChart = false;
+
   List<Transactions> get _recentTransactions {
     return _userTransaction.where((tx) {
       return tx.date.isAfter(
@@ -116,16 +118,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final islandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text(
         'Personal Expenses',
       ),
       actions: <Widget>[
-        // IconButton(
-        //   icon: const Icon(Icons.add_circle),
-        //   onPressed: () => _startAddTransaction(context),
-        // ),
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => _startAddTransaction(context),
+        ),
       ],
+    );
+    final txListWidgets = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.7,
+      child: TransactionList(_userTransaction, _deleteTransaction),
     );
     return Scaffold(
       appBar: appBar,
@@ -133,18 +144,44 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
+            if (islandScape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Show Chart'),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _showChart = val;
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            // show both chart and textlist in portrait
+            if (!islandScape)
+              Container(
                 height: (MediaQuery.of(context).size.height -
                         appBar.preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.3,
-                child: Chart(_recentTransactions)),
-            Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.7,
-                child: TransactionList(_userTransaction, _deleteTransaction)),
+                child: Chart(_recentTransactions),
+              ),
+            if (!islandScape) txListWidgets,
+            // if its on land scape mood so the button of chart will apper to show chart or to hide it
+            if (islandScape)
+              _showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(_recentTransactions),
+                    )
+                  : txListWidgets,
           ],
         ),
       ),
